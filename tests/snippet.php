@@ -25,4 +25,7 @@ var_dump(array_map(function ($key) {
 $c = implode(', ', array_map(fn ($key) => sprintf('`%s` = ?', $key), array_keys($entity->toArray())));
 //var_dump($c);
 $q = sprintf('UPDATE `table` SET %s WHERE `id` = ?', $c);
-var_dump($q);
+//var_dump($q);
+
+// INSERT INTO table (col1, col2) VALUES (:col1, :col2)
+var_dump(array_map(fn ($key) => sprintf(':%s', $key), array_keys($entity->toArray())));

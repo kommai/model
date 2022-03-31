@@ -61,20 +61,21 @@ class ItemRepository implements RepositoryInterface
         try {
             $data = $entity->toArray();
             unset($data['id']);
+            $keys = array_keys($data);
             $statement = $this->pdo->prepare(sprintf(
                 'INSERT INTO `%s` (%s) VALUES (%s)',
                 $this->table,
-                implode(', ', array_keys($data)),
-                implode(', ', array_fill(0, count($data), '?'))
+                implode(', ', $keys),
+                implode(', ', array_map(fn ($key) => sprintf(':%s', $key), $keys)),
             ));
-            $statement->execute(array_values($data));
+            $statement->execute($data);
             return $this->findById((int) $this->pdo->lastInsertId());
         } catch (PDOException $thrown) {
             throw new RuntimeException('Failed to add the entity', 0, $thrown);
         }
     }
 
-    // TODO: doesn't work, fix it
+    // TODO: doesn't work, fix it (use NAMED placeholders like add())
     public function update(EntityInterface $entity): EntityInterface
     {
         if (!$this->has($entity)) {

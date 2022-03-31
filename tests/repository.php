@@ -21,12 +21,12 @@ $itemToAdd = (new Item())->fromArray([
     'value' => 999,
 ]);
 $itemAdded = $itemRepository->add($itemToAdd);
-//var_dump($itemAdded, $itemAdded === $itemToAdd);
+var_dump($itemAdded, $itemAdded === $itemToAdd);
 
 $itemAdded->name = 'Now it\'s free!';
 $itemAdded->value = 0;
 
-var_dump($itemRepository->update($itemAdded));
+//var_dump($itemRepository->update($itemAdded));
 
 //var_dump(iterator_to_array($itemRepository->findAll()));
 //var_dump($itemRepository->findById(1));
