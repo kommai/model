@@ -61,12 +61,11 @@ class ItemRepository implements RepositoryInterface
         try {
             $data = $entity->toArray();
             unset($data['id']);
-            $keys = array_keys($data);
             $statement = $this->pdo->prepare(sprintf(
                 'INSERT INTO `%s` (%s) VALUES (%s)',
                 $this->table,
-                implode(', ', $keys),
-                implode(', ', array_map(fn ($key) => sprintf(':%s', $key), $keys)),
+                implode(', ', array_keys($data)),
+                implode(', ', array_map(fn ($key) => sprintf(':%s', $key), array_keys($data))),
             ));
             $statement->execute($data);
             return $this->findById((int) $this->pdo->lastInsertId());
@@ -84,13 +83,20 @@ class ItemRepository implements RepositoryInterface
         try {
             $data = $entity->toArray();
             unset($data['id']);
+            $q = sprintf(
+                'UPDATE `%s` SET %s WHERE `id` = ?',
+                $this->table,
+                implode(', ', array_map(fn ($key) => sprintf('`%s` = :%s', $key, $key), array_keys($data)))
+            );
+            var_dump($q);
             $statement = $this->pdo->prepare(sprintf(
                 'UPDATE `%s` SET %s WHERE `id` = ?',
                 $this->table,
-                implode(', ', array_map(fn ($key) => sprintf('`%s` = ?', $key), array_keys($data)))
+                implode(', ', array_map(fn ($key) => sprintf('`%s` = :%s', $key, $key), array_keys($data)))
             ));
-            $statement->execute(array_merge([$entity->id], array_values($data)));
-            return $this->findById($entity->id);
+            //$statement->execute(array_merge([$entity->id], array_values($data)));
+            //return $this->findById($entity->id);
+            return $entity;
         } catch (PDOException $thrown) {
             throw new RuntimeException('Failed to update the entity', 0, $thrown);
         }
