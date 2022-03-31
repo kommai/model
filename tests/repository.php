@@ -27,5 +27,5 @@ $itemAdded->name = 'Now it\'s free!';
 $itemAdded->value = 0;
 var_dump($itemRepository->update($itemAdded));
 
-//var_dump(iterator_to_array($itemRepository->findAll()));
-//var_dump($itemRepository->findById(1));
+var_dump(iterator_to_array($itemRepository->findAll()));
+var_dump($itemRepository->findById(2));

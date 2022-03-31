@@ -39,8 +39,8 @@ class ItemRepository implements RepositoryInterface
     public function findById(int $id): ?EntityInterface
     {
         try {
-            $statement = $this->pdo->prepare(sprintf('SELECT * FROM `%s` WHERE `id` = ?', $this->table));
-            $statement->execute([$id]);
+            $statement = $this->pdo->prepare(sprintf('SELECT * FROM `%s` WHERE `id` = :id', $this->table));
+            $statement->execute(['id' => $id]);
             $data = $statement->fetch();
             return $data ? self::createEntity()->fromArray($data) : null;
         } catch (PDOException $thrown) {
@@ -74,7 +74,6 @@ class ItemRepository implements RepositoryInterface
         }
     }
 
-    // TODO: doesn't work, fix it (use NAMED placeholders like add())
     public function update(EntityInterface $entity): EntityInterface
     {
         if (!$this->has($entity)) {
@@ -83,19 +82,12 @@ class ItemRepository implements RepositoryInterface
         try {
             $data = $entity->toArray();
             unset($data['id']);
-            $q = sprintf(
-                'UPDATE `%s` SET %s WHERE `id` = ?',
-                $this->table,
-                implode(', ', array_map(fn ($key) => sprintf('`%s` = :%s', $key, $key), array_keys($data)))
-            );
-            var_dump($q);
             $statement = $this->pdo->prepare(sprintf(
-                'UPDATE `%s` SET %s WHERE `id` = ?',
+                'UPDATE `%s` SET %s WHERE `id` = :id',
                 $this->table,
                 implode(', ', array_map(fn ($key) => sprintf('`%s` = :%s', $key, $key), array_keys($data)))
             ));
-            //$statement->execute(array_merge([$entity->id], array_values($data)));
-            //return $this->findById($entity->id);
+            $statement->execute(array_merge($data, ['id' => $entity->id]));
             return $entity;
         } catch (PDOException $thrown) {
             throw new RuntimeException('Failed to update the entity', 0, $thrown);
@@ -108,8 +100,8 @@ class ItemRepository implements RepositoryInterface
             throw new LogicException('Cannot delete an unsaved entity');
         }
         try {
-            $statement = $this->pdo->prepare(sprintf('DELETE FROM `%s` WHERE `id` = ?', $this->table));
-            $statement->execute([$entity->id]);
+            $statement = $this->pdo->prepare(sprintf('DELETE FROM `%s` WHERE `id` = :id', $this->table));
+            $statement->execute(['id' => $entity->id]);
         } catch (PDOException $thrown) {
             throw new RuntimeException('Failed to delete the entity', 0, $thrown);
         }
