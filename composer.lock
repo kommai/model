@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9c61bbb27bf01776cd2e283b6f950199",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "kommai/testkit",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kommai/testkit.git",
+                "reference": "1a7fc5c20599ef4923585de4b20752d078ac18e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kommai/testkit/zipball/1a7fc5c20599ef4923585de4b20752d078ac18e6",
+                "reference": "1a7fc5c20599ef4923585de4b20752d078ac18e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kommai\\TestKit\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "The Kommai Toolkit",
+                    "email": "dev@kommai.app"
+                }
+            ],
+            "description": "The kommai test kit",
+            "homepage": "https://github.com/kommai/testkit",
+            "support": {
+                "source": "https://github.com/kommai/testkit/tree/main",
+                "issues": "https://github.com/kommai/testkit/issues"
+            },
+            "time": "2022-03-30T00:17:45+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "kommai/testkit": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.0",
+        "ext-pdo": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}

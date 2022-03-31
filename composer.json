@@ -1,0 +1,32 @@
+{
+    "name": "kommai/model",
+    "description": "The kommai model",
+    "type": "library",
+    "homepage": "https://github.com/kommai/model",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "The Kommai Toolkit",
+            "email": "dev@kommai.app"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*"
+    },
+    "require-dev": {
+        "kommai/testkit": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kommai\\Model\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kommai/testkit"
+        }
+    ]
+}
