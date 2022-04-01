@@ -28,4 +28,21 @@ $itemAdded->value = 0;
 var_dump($itemRepository->update($itemAdded));
 
 var_dump(iterator_to_array($itemRepository->findAll()));
-var_dump($itemRepository->findById(2));
+//var_dump($itemRepository->findById(2));
+
+$itemOwnerRepository = new ItemOwnerRepository($pdo, 'item_owners');
+
+$itemOwner = $itemOwnerRepository->findById(2);
+$itemOwner->name = 'Barry';
+$itemOwnerRepository->update($itemOwner);
+
+var_dump(iterator_to_array($itemOwnerRepository->findAll()));
+
+foreach ($itemOwnerRepository->findAll() as $itemOwner) {
+    $item = $itemRepository->findById($itemOwner->itemId);
+    if ($item instanceof Item) {
+        echo sprintf('%s owns %s', $itemOwner->name, $item->name), PHP_EOL;
+    } else {
+        echo sprintf('%s is missing its item', $itemOwner->name), PHP_EOL;
+    }
+}

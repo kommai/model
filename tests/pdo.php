@@ -10,4 +10,9 @@ $statement->execute(['Raspberry PI', 12920]);
 $statement->execute(['Khadas', 9560]);
 $statement->execute(['LattePanda', 18119]);
 
+$pdo->query('CREATE TABLE item_owners (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `item` INTEGER, `name` TEXT)');
+$statement = $pdo->prepare('INSERT INTO `item_owners` VALUES (NULL, ?, ?)');
+$statement->execute([1, 'Alice']);
+$statement->execute([2, 'Bob']);
+
 return $pdo;

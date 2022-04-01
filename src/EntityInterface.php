@@ -9,5 +9,5 @@ interface EntityInterface
     public function __serialize(): array;
     public function __unserialize(array $data): void;
     public function toArray(): array;
-    public function fromArray(array $data);
+    public function fromArray(array $data): self;
 }

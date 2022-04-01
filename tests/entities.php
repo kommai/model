@@ -9,7 +9,6 @@ class Item implements EntityInterface
 {
     use EntityTrait;
 
-    //public ?int $id = null;
     public string $name = '';
     public int $value = 0;
 
@@ -20,10 +19,28 @@ class Item implements EntityInterface
         $this->value = (int) $data['value'];
         return $this;
     }
+}
+
+class ItemOwner implements EntityInterface
+{
+    use EntityTrait;
+
+    public ?int $itemId = null;
+    public string $name = '';
+
+    public function fromArray(array $data): self
+    {
+        $this->id = (int) $data['id'];
+        $this->itemId = (int) $data['item'];
+        $this->name = $data['name'];
+        return $this;
+    }
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        $data = get_object_vars($this);
+        unset($data['itemId']);
+        $data['item'] = $this->itemId;
+        return $data;
     }
 }
-
