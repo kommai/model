@@ -24,3 +24,15 @@ class ItemOwnerRepository implements RepositoryInterface
         return new ItemOwner();
     }
 }
+
+class ItemRelationRepository implements RepositoryInterface
+{
+    use RepositoryTrait;
+
+    /*
+    private static function createEntity(): Item
+    {
+        return new Item();
+    }
+    */
+}

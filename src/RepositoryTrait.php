@@ -13,14 +13,16 @@ use RuntimeException;
 trait RepositoryTrait
 {
     private PDO $pdo;
-    private string $table;
+    public string $table; // readonly
+    private array $repositories;
 
-    public function __construct(PDO $pdo, string $table)
+    public function __construct(PDO $pdo, string $table, RepositoryInterface ...$repositories)
     {
         $this->pdo = $pdo;
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->table = $table;
+        $this->repositories = $repositories;
     }
 
     public function add(EntityInterface $entity): EntityInterface

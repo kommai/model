@@ -15,4 +15,10 @@ $statement = $pdo->prepare('INSERT INTO `item_owners` VALUES (NULL, ?, ?)');
 $statement->execute([1, 'Alice']);
 $statement->execute([2, 'Bob']);
 
+$pdo->query('CREATE TABLE item_relations (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `item` INTEGER, `owner` INTEGER)');
+$statement = $pdo->prepare('INSERT INTO `item_relations` VALUES (NULL, ?, ?)');
+$statement->execute([1, 1]);
+$statement->execute([1, 2]);
+$statement->execute([2, 1]);
+
 return $pdo;
