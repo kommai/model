@@ -11,5 +11,14 @@ $item = (new Item())->fromArray([
     'name' => 'An item',
     'value' => 1000,
 ]);
-var_dump($item, $item->toArray());
+//var_dump($item, $item->toArray());
 //var_dump(unserialize(serialize($item)));
+
+$itemA = clone $item;
+//$itemB = new ItemOwner();
+$itemB = clone $itemA;
+//$itemB->id = 0;
+$itemB->name = '[MODIFIED]';
+$itemB->value = 1000;
+
+var_dump($itemA->compare($itemB));

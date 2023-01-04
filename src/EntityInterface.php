@@ -10,4 +10,5 @@ interface EntityInterface
     public function __unserialize(array $data): void;
     public function toArray(): array;
     public function fromArray(array $data): self;
+    public function compare(EntityInterface $entity): array;
 }
